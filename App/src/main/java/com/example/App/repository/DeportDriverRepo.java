@@ -2,6 +2,7 @@ package com.example.App.repository;
 
 
 import com.example.App.models.DeportDriver;
+import com.example.App.models.Depot;
 import com.example.App.models.MyUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 

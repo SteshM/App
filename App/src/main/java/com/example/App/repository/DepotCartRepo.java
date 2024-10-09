@@ -1,6 +1,7 @@
 package com.example.App.repository;
 
 import com.example.App.models.DepotCart;
+import com.example.App.models.MyUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

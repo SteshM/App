@@ -10,7 +10,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class DepotCartResponseDto {
+    private Long cartItemId;
     private Long productId;
+    private String productName;
     private Long qAttId;
+    private String attrName;
     private int quantity;
 }

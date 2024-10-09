@@ -126,6 +126,7 @@ public class StreamMapper {
         return retailerOrder;
     }
 
+
     public static DepotCartResponseDto getDepotCartResponseDtofromDepotCart(DepotCart depotCart){
         return DepotCartResponseDto.builder()
                 .attrName(depotCart.getQuantityAttribute().getAttrDescription())
@@ -137,4 +138,3 @@ public class StreamMapper {
                 .build();
     }
 }
-
