@@ -1,6 +1,9 @@
 package com.example.App.repository;
 
+import com.example.App.enums.OrderStatus;
+import com.example.App.models.Depot;
 import com.example.App.models.DepotOrder;
+import com.example.App.models.MyUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

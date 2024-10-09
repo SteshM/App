@@ -1,5 +1,9 @@
 package com.example.App.repository;
 
+import com.example.App.models.Analytics.CustomerAnalytics;
+import com.example.App.models.Analytics.OrderAnalytics;
+import com.example.App.models.Analytics.PaymentAnalytics;
+import com.example.App.models.Analytics.ProductsAnalytics;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
