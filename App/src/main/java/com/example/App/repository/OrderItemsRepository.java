@@ -2,6 +2,7 @@ package com.example.App.repository;
 
 import com.example.App.models.Order;
 import com.example.App.models.OrderItem;
+import com.example.App.models.QuantityAttribute;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

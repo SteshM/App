@@ -1,5 +1,6 @@
 package com.example.App.utils;
 
+import com.example.App.Main.CustomUser;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;

@@ -1,5 +1,6 @@
 package com.example.App.repository;
 
+import com.example.App.models.Analytics.CustomerAnalytics;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

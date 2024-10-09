@@ -3,6 +3,7 @@ package com.example.App.repository;
 import com.example.App.models.Depot;
 import com.example.App.models.DepotProduct;
 import com.example.App.models.Product;
+import com.example.App.models.QuantityAttribute;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

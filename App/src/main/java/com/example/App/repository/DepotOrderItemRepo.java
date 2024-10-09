@@ -1,5 +1,6 @@
 package com.example.App.repository;
 
+import com.example.App.models.DepotOrder;
 import com.example.App.models.DepotOrderItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 

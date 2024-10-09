@@ -1,5 +1,6 @@
 package com.example.App.repository;
 
+import com.example.App.dto.AnalyticsRequestDto;
 import com.example.App.models.Analytics.CustomerAnalytics;
 import com.example.App.models.Analytics.OrderAnalytics;
 import com.example.App.models.Analytics.PaymentAnalytics;
