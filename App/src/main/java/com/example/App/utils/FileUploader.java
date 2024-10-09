@@ -1,5 +1,6 @@
 package com.example.App.utils;
 
+import com.example.App.dto.ImageUploadRes;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

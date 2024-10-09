@@ -1,6 +1,7 @@
 package com.example.App.utils;
 
 
+import com.example.App.dto.*;
 import com.example.App.models.*;
 
 public class StreamMapper {
