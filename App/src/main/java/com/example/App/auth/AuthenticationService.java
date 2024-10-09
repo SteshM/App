@@ -1,4 +1,4 @@
-package com.example.App.controller;
+package com.example.App.auth;
 
 import com.example.App.Main.CustomUser;
 import com.example.App.dto.MinimalRes;

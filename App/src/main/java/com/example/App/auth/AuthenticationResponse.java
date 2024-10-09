@@ -1,4 +1,4 @@
-package com.example.App.controller;
+package com.example.App.auth;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
