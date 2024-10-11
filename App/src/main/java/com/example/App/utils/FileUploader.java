@@ -35,7 +35,7 @@ public class FileUploader {
     Exchanger exchanger;
 
     public ImageUploadRes uploadImage(String rootFolder, MultipartFile file, String uploaderLink){
-        log.info(file.getContentType());
+//        log.info(file.getContentType());
         //handle local files
         if(!this.pathExist(rootFolder)){
             log.info("rootfolder missed");

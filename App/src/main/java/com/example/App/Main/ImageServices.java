@@ -60,8 +60,8 @@ public class ImageServices implements ImageGuide {
 
     @Override
     public MinimalRes uploadProfilePic(MultipartFile file) {
-        log.info(depotRootFolder);
-        log.info(uploaderLink);
+//        log.info(depotRootFolder);
+//        log.info(uploaderLink);
         MyUser user=  myUserRepo.findByEmail(UserName.getUsername());
         if(user == null){
             return MinimalRes.builder()
