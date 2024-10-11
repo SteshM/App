@@ -1,5 +1,6 @@
 package com.example.App.dto;
 
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,3 +14,4 @@ public class RegisterDto {
     private String truckNo;
     private String who;
 }
+

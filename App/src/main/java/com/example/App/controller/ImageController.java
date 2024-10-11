@@ -3,7 +3,7 @@ package com.example.App.controller;
 import com.example.App.dto.ExtendedRes;
 import com.example.App.dto.ImageDeleteDto;
 import com.example.App.dto.MinimalRes;
-import com.example.App.impl.ImageGuide;
+import com.example.App.Main.ImageGuide;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

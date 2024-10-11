@@ -13,4 +13,3 @@ public class ResetPasswordDto {
     private String oldPassword;
     private String newPassword;
 }
-

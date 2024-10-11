@@ -1,12 +1,10 @@
 package com.example.App.Main;
 
-
 import com.example.App.dto.*;
-import com.example.App.impl.ImageGuide;
 import com.example.App.models.*;
 import com.example.App.repository.*;
 import com.example.App.utils.FileUploader;
-import com.example.App.utils.UserName;
+import com.example.App.Service.Components.UserName;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -43,7 +41,6 @@ public class ImageServices implements ImageGuide {
     TruckImagesRepo truckImagesRepo;
 
 
-
     @Value("${profile.pic}")
     String profileRootFolder;
     @Value("${depot.pic}")
@@ -62,22 +59,22 @@ public class ImageServices implements ImageGuide {
     public MinimalRes uploadProfilePic(MultipartFile file) {
 //        log.info(depotRootFolder);
 //        log.info(uploaderLink);
-        MyUser user=  myUserRepo.findByEmail(UserName.getUsername());
-        if(user == null){
+        MyUser user = myUserRepo.findByEmail(UserName.getUsername());
+        if (user == null) {
             return MinimalRes.builder()
                     .status(400)
                     .message("user not found")
                     .build();
         }
-        if(user.getPicture() == null){
-            ImageUploadRes imageUploadRes = fileUploader.uploadImage(profileRootFolder, file, uploaderLink+"/uploader/upload");
-            if(imageUploadRes == null){
+        if (user.getPicture() == null) {
+            ImageUploadRes imageUploadRes = fileUploader.uploadImage(profileRootFolder, file, uploaderLink + "/uploader/upload");
+            if (imageUploadRes == null) {
                 return MinimalRes.builder()
                         .status(400)
                         .message("Image did not upload")
                         .build();
             }
-            if(imageUploadRes.getPublicId() != null){
+            if (imageUploadRes.getPublicId() != null) {
                 user.setCloud(true);
                 user.setPublicId(imageUploadRes.getPublicId());
             }
@@ -88,7 +85,7 @@ public class ImageServices implements ImageGuide {
                     .message("uploadedSuccessfully")
                     .build();
 
-        }else{
+        } else {
             String oldPublicId = user.getPublicId();
             String oldPictureName = user.getPicture();
             boolean isInCloud;
@@ -96,28 +93,27 @@ public class ImageServices implements ImageGuide {
             ImageUploadRes imageUploadRes = new ImageUploadRes();
 
 
-
-            if(user.isCloud()){
-                imageUploadRes = fileUploader.uploadImage(profileRootFolder, file,  uploaderLink+"/uploader/update/"+user.getPublicId());
-            }else{
-                isInCloud = !fileUploader.deleteLocalPicture(profileRootFolder+"/"+oldPictureName);
-                if(isInCloud){
+            if (user.isCloud()) {
+                imageUploadRes = fileUploader.uploadImage(profileRootFolder, file, uploaderLink + "/uploader/update/" + user.getPublicId());
+            } else {
+                isInCloud = !fileUploader.deleteLocalPicture(profileRootFolder + "/" + oldPictureName);
+                if (isInCloud) {
                     PendingLocalFile pendingLocalFile = new PendingLocalFile();
                     pendingLocalFile.setFileName(oldPictureName);
                     pendingLocalFileRepo.save(pendingLocalFile);
                 }
-                imageUploadRes = fileUploader.uploadImage(profileRootFolder, file,  uploaderLink+"/uploader/upload");
+                imageUploadRes = fileUploader.uploadImage(profileRootFolder, file, uploaderLink + "/uploader/upload");
             }
 
-            if(imageUploadRes.getPublicId() == null){
-                if(user.isCloud()){
+            if (imageUploadRes.getPublicId() == null) {
+                if (user.isCloud()) {
                     fileUploader.deleteCloudPicture(uploaderLink, oldPublicId);
                 }
                 user.setPublicId(null);
                 user.setCloud(false);
                 user.setPicture(imageUploadRes.getFileName());
                 myUserRepo.save(user);
-            }else{
+            } else {
                 user.setCloud(true);
                 user.setPublicId(imageUploadRes.getPublicId());
                 user.setPicture(imageUploadRes.getFileName());
@@ -133,16 +129,16 @@ public class ImageServices implements ImageGuide {
 
     @Override
     public MinimalRes uploadDepotPic(Long depotId, MultipartFile file) {
-        Depot depot=  depotRepository.findById(depotId).get();
-        if(depot == null){
+        Depot depot = depotRepository.findById(depotId).get();
+        if (depot == null) {
             return MinimalRes.builder()
                     .status(400)
                     .message("depot not found")
                     .build();
         }
-        if(depot.getPicture() == null){
-            ImageUploadRes imageUploadRes = fileUploader.uploadImage(profileRootFolder, file, uploaderLink+"/uploader/upload");
-            if(imageUploadRes.getPublicId() != null){
+        if (depot.getPicture() == null) {
+            ImageUploadRes imageUploadRes = fileUploader.uploadImage(profileRootFolder, file, uploaderLink + "/uploader/upload");
+            if (imageUploadRes.getPublicId() != null) {
                 depot.setCloud(true);
                 depot.setPublicId(imageUploadRes.getPublicId());
             }
@@ -153,7 +149,7 @@ public class ImageServices implements ImageGuide {
                     .message("uploadedSuccessfully")
                     .build();
 
-        }else{
+        } else {
             String oldPublicId = depot.getPublicId();
             String oldPictureName = depot.getPicture();
             boolean isInCloud;
@@ -161,28 +157,27 @@ public class ImageServices implements ImageGuide {
             ImageUploadRes imageUploadRes = new ImageUploadRes();
 
 
-
-            if(depot.isCloud()){
-                imageUploadRes = fileUploader.uploadImage(profileRootFolder, file,  uploaderLink+"/uploader/update/"+depot.getPublicId());
-            }else{
-                isInCloud = !fileUploader.deleteLocalPicture(profileRootFolder+"\\"+oldPictureName);
-                if(isInCloud){
+            if (depot.isCloud()) {
+                imageUploadRes = fileUploader.uploadImage(profileRootFolder, file, uploaderLink + "/uploader/update/" + depot.getPublicId());
+            } else {
+                isInCloud = !fileUploader.deleteLocalPicture(profileRootFolder + "\\" + oldPictureName);
+                if (isInCloud) {
                     PendingLocalFile pendingLocalFile = new PendingLocalFile();
                     pendingLocalFile.setFileName(oldPictureName);
                     pendingLocalFileRepo.save(pendingLocalFile);
                 }
-                imageUploadRes = fileUploader.uploadImage(profileRootFolder, file,  uploaderLink+"/uploader/upload");
+                imageUploadRes = fileUploader.uploadImage(profileRootFolder, file, uploaderLink + "/uploader/upload");
             }
 
-            if(imageUploadRes.getPublicId() == null){
-                if(depot.isCloud()){
+            if (imageUploadRes.getPublicId() == null) {
+                if (depot.isCloud()) {
                     fileUploader.deleteCloudPicture(uploaderLink, oldPublicId);
                 }
                 depot.setPublicId(null);
                 depot.setCloud(false);
                 depot.setPicture(imageUploadRes.getFileName());
                 depotRepository.save(depot);
-            }else{
+            } else {
                 depot.setCloud(true);
                 depot.setPublicId(imageUploadRes.getPublicId());
                 depot.setPicture(imageUploadRes.getFileName());
@@ -200,33 +195,33 @@ public class ImageServices implements ImageGuide {
     public ResponseEntity<byte[]> getLocalImage(String who, String imageName) {
 
         String filePath = "";
-        if(who.equalsIgnoreCase("profile")){
-            filePath = profileRootFolder+"/"+imageName;
-        }else if(who.equalsIgnoreCase("depot")){
-            filePath = depotRootFolder+"/"+imageName;
-        }else if(who.equalsIgnoreCase("shop")){
-            filePath = shopRootFolder+"/"+imageName;
-        }else if(who.equalsIgnoreCase("truck")){
-            filePath = truckRootFolder+"/"+imageName;
-        }else{
-            filePath = productRootFolder+"/"+imageName;
+        if (who.equalsIgnoreCase("profile")) {
+            filePath = profileRootFolder + "/" + imageName;
+        } else if (who.equalsIgnoreCase("depot")) {
+            filePath = depotRootFolder + "/" + imageName;
+        } else if (who.equalsIgnoreCase("shop")) {
+            filePath = shopRootFolder + "/" + imageName;
+        } else if (who.equalsIgnoreCase("truck")) {
+            filePath = truckRootFolder + "/" + imageName;
+        } else {
+            filePath = productRootFolder + "/" + imageName;
         }
         log.info(filePath);
         return fileUploader.getPic(filePath);
     }
 
     @Override
-    public MinimalRes updateProductAttributePic(Long qattid,MultipartFile file) {
+    public MinimalRes updateProductAttributePic(Long qattid, MultipartFile file) {
         QuantityAttribute quantityAttribute = quantityAttributeRepo.findById(qattid).get();
-        if(quantityAttribute == null){
+        if (quantityAttribute == null) {
             return MinimalRes.builder()
                     .status(400)
                     .message("Attribute not found")
                     .build();
         }
-        if(quantityAttribute.getPicture() == null){
-            ImageUploadRes imageUploadRes = fileUploader.uploadImage(productRootFolder, file, uploaderLink+"/uploader/upload");
-            if(imageUploadRes.getPublicId() != null){
+        if (quantityAttribute.getPicture() == null) {
+            ImageUploadRes imageUploadRes = fileUploader.uploadImage(productRootFolder, file, uploaderLink + "/uploader/upload");
+            if (imageUploadRes.getPublicId() != null) {
                 quantityAttribute.setCloud(true);
                 quantityAttribute.setPublicId(imageUploadRes.getPublicId());
             }
@@ -237,7 +232,7 @@ public class ImageServices implements ImageGuide {
                     .message("uploadedSuccessfully")
                     .build();
 
-        }else{
+        } else {
             String oldPublicId = quantityAttribute.getPublicId();
             String oldPictureName = quantityAttribute.getPicture();
             boolean isInCloud;
@@ -245,28 +240,27 @@ public class ImageServices implements ImageGuide {
             ImageUploadRes imageUploadRes = new ImageUploadRes();
 
 
-
-            if(quantityAttribute.isCloud()){
-                imageUploadRes = fileUploader.uploadImage(productRootFolder, file,  uploaderLink+"/uploader/update/"+quantityAttribute.getPublicId());
-            }else{
-                isInCloud= !fileUploader.deleteLocalPicture(productRootFolder+"/"+oldPictureName);
-                if(isInCloud){
+            if (quantityAttribute.isCloud()) {
+                imageUploadRes = fileUploader.uploadImage(productRootFolder, file, uploaderLink + "/uploader/update/" + quantityAttribute.getPublicId());
+            } else {
+                isInCloud = !fileUploader.deleteLocalPicture(productRootFolder + "/" + oldPictureName);
+                if (isInCloud) {
                     PendingLocalFile pendingLocalFile = new PendingLocalFile();
                     pendingLocalFile.setFileName(oldPictureName);
                     pendingLocalFileRepo.save(pendingLocalFile);
                 }
-                imageUploadRes = fileUploader.uploadImage(productRootFolder, file,  uploaderLink+"/uploader/upload");
+                imageUploadRes = fileUploader.uploadImage(productRootFolder, file, uploaderLink + "/uploader/upload");
             }
 
-            if(imageUploadRes.getPublicId() == null){
-                if(quantityAttribute.isCloud()){
+            if (imageUploadRes.getPublicId() == null) {
+                if (quantityAttribute.isCloud()) {
                     fileUploader.deleteCloudPicture(uploaderLink, oldPublicId);
                 }
                 quantityAttribute.setPublicId(null);
                 quantityAttribute.setCloud(false);
                 quantityAttribute.setPicture(imageUploadRes.getFileName());
                 quantityAttributeRepo.save(quantityAttribute);
-            }else{
+            } else {
                 quantityAttribute.setCloud(true);
                 quantityAttribute.setPublicId(imageUploadRes.getPublicId());
                 quantityAttribute.setPicture(imageUploadRes.getFileName());
@@ -287,7 +281,7 @@ public class ImageServices implements ImageGuide {
                 .cloud(myUser.isCloud())
                 .picture(myUser.getPicture())
                 .build();
-        if(profileImageDto.getPicture() == null){
+        if (profileImageDto.getPicture() == null) {
             return ExtendedRes.builder()
                     .status(202)
                     .message("No image")
@@ -305,7 +299,7 @@ public class ImageServices implements ImageGuide {
         Optional<Truck> truck = truckRepo.findById(truckId);
         List<TruckImages> truckImages = truckImagesRepo.findByTruck(truck.get());
         List<ImageDto> imageDtos = truckImages.stream().map(
-                (truckImage)->{
+                (truckImage) -> {
                     return ImageDto.builder()
                             .cloud(truckImage.isCloud())
                             .id(truckImage.getId())
@@ -313,13 +307,13 @@ public class ImageServices implements ImageGuide {
                             .build();
                 }
         ).collect(Collectors.toList());
-        if(truck.isPresent()){
+        if (truck.isPresent()) {
             return ExtendedRes.builder()
                     .status(200)
                     .message("Truck images")
                     .body(imageDtos)
                     .build();
-        }else{
+        } else {
             return ExtendedRes.builder()
                     .status(400)
                     .message("Truck not found")
@@ -331,10 +325,10 @@ public class ImageServices implements ImageGuide {
     @Override
     public ExtendedRes getShopImages(Long shopId) {
         Optional<Shop> shop = shopRepo.findById(shopId);
-        if(shop.isPresent()){
+        if (shop.isPresent()) {
             List<ShopImages> shopImages = shopImagesRepo.findByShop(shop.get());
             List<ImageDto> imageDtos = shopImages.stream().map(
-                    (shopImage)->{
+                    (shopImage) -> {
                         return ImageDto.builder()
                                 .cloud(shopImage.isCloud())
                                 .id(shopImage.getId())
@@ -347,7 +341,7 @@ public class ImageServices implements ImageGuide {
                     .message("Shop images")
                     .body(imageDtos)
                     .build();
-        }else{
+        } else {
             return ExtendedRes.builder()
                     .status(400)
                     .message("Shop not found")
@@ -358,13 +352,13 @@ public class ImageServices implements ImageGuide {
     @Override
     public MinimalRes deleteShopImages(ImageDeleteDto imageDeleteDto) {
         log.info("Shop images: {}", imageDeleteDto.getImgIds());
-        for(var i = 0; i< imageDeleteDto.getImgIds().size(); i++){
+        for (var i = 0; i < imageDeleteDto.getImgIds().size(); i++) {
             Optional<ShopImages> shopImage = shopImagesRepo.findById(imageDeleteDto.getImgIds().get(i));
-            if(shopImage.isPresent()){
+            if (shopImage.isPresent()) {
                 ShopImages shopImages = shopImage.get();
-                if(shopImages.isCloud()){
+                if (shopImages.isCloud()) {
                     fileUploader.deleteCloudPicture(uploaderLink, shopImages.getPublicId());
-                }else{
+                } else {
                     fileUploader.deleteLocalPicture(shopImages.getPicture());
                 }
                 shopImagesRepo.delete(shopImages);
@@ -378,13 +372,13 @@ public class ImageServices implements ImageGuide {
 
     @Override
     public MinimalRes deleteTruckImages(ImageDeleteDto imageDeleteDto) {
-        for(var i = 0; i< imageDeleteDto.getImgIds().size(); i++){
+        for (var i = 0; i < imageDeleteDto.getImgIds().size(); i++) {
             Optional<TruckImages> truckImage = truckImagesRepo.findById(imageDeleteDto.getImgIds().get(i));
-            if(truckImage.isPresent()){
+            if (truckImage.isPresent()) {
                 TruckImages truckImages = truckImage.get();
-                if(truckImages.isCloud()){
+                if (truckImages.isCloud()) {
                     fileUploader.deleteCloudPicture(uploaderLink, truckImages.getPublicId());
-                }else{
+                } else {
                     fileUploader.deleteLocalPicture(truckImages.getPicture());
                 }
                 truckImagesRepo.delete(truckImages);
@@ -394,5 +388,5 @@ public class ImageServices implements ImageGuide {
                 .status(200)
                 .message("deleted image(s)")
                 .build();
-    }}
-
+    }
+}

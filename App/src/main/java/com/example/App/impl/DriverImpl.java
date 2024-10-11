@@ -11,7 +11,7 @@ import com.example.App.models.Order;
 import com.example.App.models.Truck;
 import com.example.App.repository.*;
 import com.example.App.utils.StreamMapper;
-import com.example.App.utils.UserName;
+import com.example.App.Service.Components.UserName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

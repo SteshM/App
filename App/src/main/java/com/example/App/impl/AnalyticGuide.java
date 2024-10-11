@@ -1,6 +1,5 @@
 package com.example.App.impl;
 
-
 import com.example.App.dto.AnalyticsRequestDto;
 import com.example.App.dto.ExtendedRes;
 
@@ -13,4 +12,5 @@ public interface AnalyticGuide {
     public ExtendedRes getOrders(AnalyticsRequestDto analyticsRequestDto);
     public ExtendedRes getProducts(AnalyticsRequestDto analyticsRequestDto);
     public ExtendedRes getPayments(AnalyticsRequestDto analyticsRequestDto);
+
 }

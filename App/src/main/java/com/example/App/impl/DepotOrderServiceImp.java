@@ -9,7 +9,7 @@ import com.example.App.repository.*;
 import com.example.App.utils.Exchanger;
 import com.example.App.utils.RandomGenerator;
 import com.example.App.utils.StreamMapper;
-import com.example.App.utils.UserName;
+import com.example.App.Service.Components.UserName;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

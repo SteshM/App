@@ -1,6 +1,7 @@
 package com.example.App.auth;
 
 import com.example.App.Main.CustomUser;
+import com.example.App.Service.Components.UserName;
 import com.example.App.dto.MinimalRes;
 import com.example.App.dto.RegisterDto;
 import com.example.App.dto.ResetPasswordDto;
@@ -10,7 +11,10 @@ import com.example.App.models.MyUser;
 import com.example.App.models.Profile;
 import com.example.App.repository.MyUserRepo;
 import com.example.App.repository.ProfileRepo;
-import com.example.App.utils.*;
+import com.example.App.utils.Exchanger;
+import com.example.App.utils.JwtGenerator2;
+import com.example.App.utils.PhoneNumberEditor;
+import com.example.App.utils.RandomGenerator;
 import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +29,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+
 
 @Service
 @RequiredArgsConstructor
