@@ -1,5 +1,6 @@
 package com.example.auth;
 
+
 import com.example.dto.MinimalRes;
 import com.example.dto.RegisterDto;
 import com.example.dto.ResetPasswordDto;
@@ -51,5 +52,4 @@ public class AuthenticationController {
     public AuthenticationResponse refreshToken( HttpServletRequest request){
         return service.refreshToken(request);
     }
-
 }

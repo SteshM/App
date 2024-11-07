@@ -13,11 +13,13 @@ import com.example.models.Truck;
 import com.example.repository.*;
 import com.example.utils.StreamMapper;
 import com.example.Service.Components.UserName;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+import java.util.Optional;
+@Slf4j
 @Service
 public class DriverImpl implements DriverGuide{
 
@@ -49,8 +51,11 @@ public class DriverImpl implements DriverGuide{
 
     @Override
     public ExtendedRes getMyDetails() {
-        DriverDto driver = driverDtoRepo.getDriverWithEmailAndSoftDelete(UserName.getUsername(), false);
-        if(driver == null){
+        Optional<DriverDto> driver = driverDtoRepo.findByEmail(UserName.getUsername());
+        log.info("Driver email is : {}",UserName.getUsername());
+
+//        DriverDto driver = driverDtoRepo.getDriverWithEmailAndSoftDelete(UserName.getUsername(), false);
+        if(driver.isEmpty()){
             return ExtendedRes.builder()
                     .status(400)
                     .message("driver not found")

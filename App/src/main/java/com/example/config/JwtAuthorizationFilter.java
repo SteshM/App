@@ -32,14 +32,14 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         ArrayList<String> pathsAllowed = new ArrayList<>();
-        pathsAllowed.add("/api/v1/auth/allow");
+        pathsAllowed.add("/api/v1/auth/allow/");
         pathsAllowed.add("/api/v1/auth/all");
         pathsAllowed.add("/image/getPic");
         pathsAllowed.add("/v1/general");
 
         if(this.pathAllowed(pathsAllowed, request.getServletPath())
                 || request.getServletPath().contains("docs")||
-                request.getServletPath().contains("/swagger-ui")){
+                request.getServletPath().contains("/swagger-ui")|| request.getServletPath().contains("/api/v1/auth/allow/login")){
             log.info("allowed "+request.getServletPath());
             filterChain.doFilter(request, response);
         }else{

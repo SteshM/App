@@ -1,5 +1,6 @@
 package com.example.auth;
 
+
 import com.example.Main.CustomUser;
 import com.example.Service.Components.UserName;
 import com.example.dto.MinimalRes;
@@ -29,7 +30,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-
 
 @Service
 @RequiredArgsConstructor
