@@ -23,7 +23,7 @@ public class Truck {
     private String fuelType;
     private boolean isAvailable;
     private boolean isUnderMaintenance;
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name="userId")
     private MyUser myUser;
     private String createdOn = DateUtils.dateNowString();

@@ -1,6 +1,7 @@
 package com.example.models;
 
 
+import com.example.utils.DateUtils;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,6 +28,8 @@ public class MyUser {
     private Collection<Profile> profiles = new ArrayList<>();
     private String picture;
     private boolean cloud;
+    @Column(updatable = false)
+    private String createdOn = DateUtils.dateNowString();
     private String publicId;
     private boolean softDelete;
 }
